@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { AppShell } from "@/components/app-shell";
 import { PwaRegistration } from "@/components/pwa-registration";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type React from "react";
 
 import "./globals.css";
@@ -23,7 +23,6 @@ export const metadata: Metadata = {
   description: "Finance tracking app for expenses, income, investments, and net worth",
   applicationName: "Finance Tracker",
   manifest: "/manifest.webmanifest",
-  themeColor: "#101827",
   appleWebApp: {
     capable: true,
     title: "Finance Tracker",
@@ -38,6 +37,10 @@ export const metadata: Metadata = {
     ],
     apple: "/icon.svg",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#101827",
 };
 
 export default function RootLayout({

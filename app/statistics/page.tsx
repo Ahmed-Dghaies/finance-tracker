@@ -1,3 +1,5 @@
+"use client";
+
 import { BarChart3, Award, AlertCircle } from "lucide-react";
 import {
   Line,
