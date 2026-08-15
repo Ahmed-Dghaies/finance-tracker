@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { AppShell } from "@/components/app-shell";
+import { PwaRegistration } from "@/components/pwa-registration";
 
 import type { Metadata } from "next";
 import type React from "react";
@@ -20,6 +21,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Finance Tracker - Manage Your Money",
   description: "Finance tracking app for expenses, income, investments, and net worth",
+  applicationName: "Finance Tracker",
+  manifest: "/manifest.webmanifest",
+  themeColor: "#101827",
+  appleWebApp: {
+    capable: true,
+    title: "Finance Tracker",
+    statusBarStyle: "default",
+  },
   icons: {
     icon: [
       {
@@ -27,7 +36,7 @@ export const metadata: Metadata = {
         type: "image/svg+xml",
       },
     ],
-    apple: "/apple-icon.png",
+    apple: "/icon.svg",
   },
 };
 
@@ -39,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
+        <PwaRegistration />
         <AppShell>{children}</AppShell>
         <Analytics />
       </body>
