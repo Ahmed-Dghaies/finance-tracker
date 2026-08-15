@@ -23,6 +23,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { withBasePath } from "@/lib/site-path";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -60,7 +61,7 @@ export function Navigation({ userEmail, onSignOut }: NavigationProps) {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <Image
-            src="/icon.svg"
+            src={withBasePath("/icon.svg")}
             alt="Finance Tracker"
             width={36}
             height={36}
@@ -132,7 +133,7 @@ export function Navigation({ userEmail, onSignOut }: NavigationProps) {
                 <SheetHeader className="pb-2 pr-10">
                   <SheetTitle className="flex items-center gap-2">
                     <Image
-                      src="/icon.svg"
+                      src={withBasePath("/icon.svg")}
                       alt="Finance Tracker"
                       width={28}
                       height={28}

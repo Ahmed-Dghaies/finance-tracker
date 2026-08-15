@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { AppShell } from "@/components/app-shell";
 import { PwaRegistration } from "@/components/pwa-registration";
+import { withBasePath } from "@/lib/site-path";
 
 import type { Metadata, Viewport } from "next";
 import type React from "react";
@@ -31,11 +32,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/icon.svg",
+        url: withBasePath("/icon.svg"),
         type: "image/svg+xml",
       },
     ],
-    apple: "/icon.svg",
+    apple: withBasePath("/icon.svg"),
   },
 };
 

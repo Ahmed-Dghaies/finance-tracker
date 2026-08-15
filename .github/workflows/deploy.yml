@@ -17,6 +17,7 @@ jobs:
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
       NEXT_PUBLIC_OPEN_EXCHANGE_RATES_APP_ID: ${{ secrets.NEXT_PUBLIC_OPEN_EXCHANGE_RATES_APP_ID }}
+      NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
 
     steps:
       - uses: actions/checkout@v4
