@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 
 import { Plus, Trash2, Pencil, Filter } from "lucide-react";
@@ -112,242 +110,241 @@ export default function ExpensesPage() {
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight text-balance">Expenses</h1>
-            <p className="mt-1 text-muted-foreground">Track and manage your spending</p>
-          </div>
-
-          <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-            <DialogTrigger asChild>
-              <Button aria-label="open-add-expense-form" className="sm:self-start">
-                <Plus className="mr-2 h-4 w-4" />
-                Add expense
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-h-[90vh] overflow-y-auto">
-              <ExpenseForm onSubmit={handleExpenseFormSubmit} defaultCurrency="EUR" />
-            </DialogContent>
-          </Dialog>
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-balance">Expenses</h1>
+          <p className="mt-1 text-muted-foreground">Track and manage your spending</p>
         </div>
 
-        {/* Summary Cards */}
-        <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-xl font-bold sm:text-2xl" aria-label="total-expenses">
-                €{totalExpenses.toFixed(2)}
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {filteredExpenses.length} transactions
-              </p>
-            </CardContent>
-          </Card>
+        <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
+          <DialogTrigger asChild>
+            <Button aria-label="open-add-expense-form" className="sm:self-start">
+              <Plus className="mr-2 h-4 w-4" />
+              Add expense
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-h-[90vh] overflow-y-auto">
+            <ExpenseForm onSubmit={handleExpenseFormSubmit} defaultCurrency="EUR" />
+          </DialogContent>
+        </Dialog>
+      </div>
 
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Necessary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div
-                className="text-xl font-bold text-muted-foreground sm:text-2xl"
-                aria-label="necessary-expenses"
-              >
-                €{necessaryExpenses.toFixed(2)}
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {((necessaryExpenses / (necessaryExpenses + pleasureExpenses || 1)) * 100).toFixed(
-                  0,
-                )}
-                % of total
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Pleasure</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-xl font-bold text-accent sm:text-2xl" aria-label="pleasure-expenses">
-                €{pleasureExpenses.toFixed(2)}
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {((pleasureExpenses / (necessaryExpenses + pleasureExpenses || 1)) * 100).toFixed(
-                  0,
-                )}
-                % of total
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Filters */}
-        <Collapsible open={isFiltersOpen} onOpenChange={setIsFiltersOpen} className="mb-6">
-          <Card>
-            <CardHeader>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" className="w-full justify-between px-0 hover:bg-transparent">
-                  <span className="flex items-center gap-2 text-base font-semibold">
-                    <Filter className="h-4 w-4" />
-                    Filters
-                  </span>
-                  <span className="text-sm text-muted-foreground">
-                    {isFiltersOpen ? "Hide" : "Show"}
-                  </span>
-                </Button>
-              </CollapsibleTrigger>
-            </CardHeader>
-            <CollapsibleContent>
-              <CardContent className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-                <div className="flex flex-1 min-w-0 flex-col gap-2">
-                  <Label htmlFor="month-select">Month</Label>
-                  <Select value={selectedMonth} onValueChange={handleMonthChange}>
-                    <SelectTrigger id="month-select">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {monthOptions.map((month) => (
-                        <SelectItem key={month} value={month}>
-                          {month}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex flex-1 min-w-0 flex-col gap-2">
-                  <Label htmlFor="category-filter">Category</Label>
-                  <Select value={filterCategory} onValueChange={setFilterCategory}>
-                    <SelectTrigger id="category-filter">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All categories</SelectItem>
-                      {EXPENSE_CATEGORIES.map((cat) => (
-                        <SelectItem key={cat} value={cat}>
-                          {cat}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex flex-1 min-w-0 flex-col gap-2">
-                  <Label htmlFor="type-filter">Type</Label>
-                  <Select value={filterType} onValueChange={(v) => setFilterType(v as any)}>
-                    <SelectTrigger id="type-filter">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Types</SelectItem>
-                      <SelectItem value="necessary">Necessary</SelectItem>
-                      <SelectItem value="pleasure">Pleasure</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </CollapsibleContent>
-          </Card>
-        </Collapsible>
-
-        {/* Expenses List */}
+      {/* Summary Cards */}
+      <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <Card>
-          <CardHeader className="pb-0">
-            <div className="flex justify-between items-center">
-              <span className="flex flex-col gap-2">
-                <CardTitle>Expense history</CardTitle>
-                <CardDescription>View and manage your expenses</CardDescription>
-              </span>
-              {!hasRecurringExpenses && (
-                <Button aria-label="open-add-expense-form" onClick={copyRecurringExpenses}>
-                  <Plus className="w-4 h-4 mr-2" />
-                  Copy recurring expenses
-                </Button>
-              )}
-            </div>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
           </CardHeader>
           <CardContent>
-            {filteredExpenses.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground">
-                <p>No expenses found for this period.</p>
-                <p className="text-sm mt-1">Add your first expense to get started!</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {filteredExpenses.map((expense, index) => (
-                  <div
-                    key={expense.id}
-                    aria-label={`expense-item-${index}`}
-                    className="flex flex-col gap-3 rounded-lg border border-border p-4 transition-colors hover:bg-secondary/50 sm:flex-row sm:items-center sm:justify-between"
-                  >
-                    <div className="flex-1">
-                      <div className="mb-1 flex flex-wrap items-center gap-2">
-                        <span className="font-medium">{expense.category}</span>
-                        <Badge
-                          variant={expense.type === "necessary" ? "secondary" : "outline"}
-                          className="text-xs"
-                          aria-label={`expense-type-${expense.type}`}
-                        >
-                          {expense.type}
-                        </Badge>
-                        {expense.recurring && (
-                          <Badge variant="outline" className="text-xs">
-                            Recurring
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                        <span>{expense.date}</span>
-                        {expense.notes && <span>• {expense.notes}</span>}
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-2 sm:items-end">
-                      <span className="text-lg font-semibold sm:text-xl">
-                        {expense.currency} {Number(expense.amount).toFixed(2)}
-                      </span>
-                      <div className="flex items-center gap-1 self-start sm:self-auto">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => setEditingExpense(expense)}
-                          aria-label={`edit-expense-${index}`}
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleExpenseDelete(expense.id)}
-                          aria-label={`delete-expense-${index}`}
-                        >
-                          <Trash2 className="w-4 h-4 text-destructive" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="text-xl font-bold sm:text-2xl" aria-label="total-expenses">
+              €{totalExpenses.toFixed(2)}
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              {filteredExpenses.length} transactions
+            </p>
           </CardContent>
         </Card>
 
-        {/* Edit Dialog */}
-        {editingExpense && (
-          <Dialog open={!!editingExpense} onOpenChange={() => setEditingExpense(null)}>
-            <DialogContent className="max-h-[90vh] overflow-y-auto">
-              <ExpenseForm
-                onSubmit={handleExpenseFormSubmit}
-                defaultCurrency="EUR"
-                initialData={editingExpense}
-                isEditing
-              />
-            </DialogContent>
-          </Dialog>
-        )}
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Necessary</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div
+              className="text-xl font-bold text-muted-foreground sm:text-2xl"
+              aria-label="necessary-expenses"
+            >
+              €{necessaryExpenses.toFixed(2)}
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              {((necessaryExpenses / (necessaryExpenses + pleasureExpenses || 1)) * 100).toFixed(0)}
+              % of total
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium">Pleasure</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div
+              className="text-xl font-bold text-accent sm:text-2xl"
+              aria-label="pleasure-expenses"
+            >
+              €{pleasureExpenses.toFixed(2)}
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              {((pleasureExpenses / (necessaryExpenses + pleasureExpenses || 1)) * 100).toFixed(0)}%
+              of total
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Filters */}
+      <Collapsible open={isFiltersOpen} onOpenChange={setIsFiltersOpen} className="mb-6">
+        <Card>
+          <CardHeader>
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" className="w-full justify-between px-0 hover:bg-transparent">
+                <span className="flex items-center gap-2 text-base font-semibold">
+                  <Filter className="h-4 w-4" />
+                  Filters
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  {isFiltersOpen ? "Hide" : "Show"}
+                </span>
+              </Button>
+            </CollapsibleTrigger>
+          </CardHeader>
+          <CollapsibleContent>
+            <CardContent className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+              <div className="flex flex-1 min-w-0 flex-col gap-2">
+                <Label htmlFor="month-select">Month</Label>
+                <Select value={selectedMonth} onValueChange={handleMonthChange}>
+                  <SelectTrigger id="month-select">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {monthOptions.map((month) => (
+                      <SelectItem key={month} value={month}>
+                        {month}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex flex-1 min-w-0 flex-col gap-2">
+                <Label htmlFor="category-filter">Category</Label>
+                <Select value={filterCategory} onValueChange={setFilterCategory}>
+                  <SelectTrigger id="category-filter">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All categories</SelectItem>
+                    {EXPENSE_CATEGORIES.map((cat) => (
+                      <SelectItem key={cat} value={cat}>
+                        {cat}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex flex-1 min-w-0 flex-col gap-2">
+                <Label htmlFor="type-filter">Type</Label>
+                <Select value={filterType} onValueChange={(v) => setFilterType(v as any)}>
+                  <SelectTrigger id="type-filter">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    <SelectItem value="necessary">Necessary</SelectItem>
+                    <SelectItem value="pleasure">Pleasure</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardContent>
+          </CollapsibleContent>
+        </Card>
+      </Collapsible>
+
+      {/* Expenses List */}
+      <Card>
+        <CardHeader className="pb-0">
+          <div className="flex justify-between items-center">
+            <span className="flex flex-col gap-2">
+              <CardTitle>Expense history</CardTitle>
+              <CardDescription>View and manage your expenses</CardDescription>
+            </span>
+            {!hasRecurringExpenses && (
+              <Button aria-label="open-add-expense-form" onClick={copyRecurringExpenses}>
+                <Plus className="w-4 h-4 mr-2" />
+                Copy recurring expenses
+              </Button>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent>
+          {filteredExpenses.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground">
+              <p>No expenses found for this period.</p>
+              <p className="text-sm mt-1">Add your first expense to get started!</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {filteredExpenses.map((expense, index) => (
+                <div
+                  key={expense.id}
+                  aria-label={`expense-item-${index}`}
+                  className="flex flex-col gap-3 rounded-lg border border-border p-4 transition-colors hover:bg-secondary/50 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div className="flex-1">
+                    <div className="mb-1 flex flex-wrap items-center gap-2">
+                      <span className="font-medium">{expense.category}</span>
+                      <Badge
+                        variant={expense.type === "necessary" ? "secondary" : "outline"}
+                        className="text-xs"
+                        aria-label={`expense-type-${expense.type}`}
+                      >
+                        {expense.type}
+                      </Badge>
+                      {expense.recurring && (
+                        <Badge variant="outline" className="text-xs">
+                          Recurring
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                      <span>{expense.date}</span>
+                      {expense.notes && <span>• {expense.notes}</span>}
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2 sm:items-end">
+                    <span className="text-lg font-semibold sm:text-xl">
+                      {expense.currency} {Number(expense.amount).toFixed(2)}
+                    </span>
+                    <div className="flex items-center gap-1 self-start sm:self-auto">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setEditingExpense(expense)}
+                        aria-label={`edit-expense-${index}`}
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleExpenseDelete(expense.id)}
+                        aria-label={`delete-expense-${index}`}
+                      >
+                        <Trash2 className="w-4 h-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Edit Dialog */}
+      {editingExpense && (
+        <Dialog open={!!editingExpense} onOpenChange={() => setEditingExpense(null)}>
+          <DialogContent className="max-h-[90vh] overflow-y-auto">
+            <ExpenseForm
+              onSubmit={handleExpenseFormSubmit}
+              defaultCurrency="EUR"
+              initialData={editingExpense}
+              isEditing
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </main>
   );
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 
 import { Calendar, DollarSign, Plus, Target, TrendingDown, TrendingUp } from "lucide-react";

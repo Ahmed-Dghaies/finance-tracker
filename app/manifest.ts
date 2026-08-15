@@ -1,0 +1,22 @@
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "Finance Tracker",
+    short_name: "Finance Tracker",
+    description: "Track expenses, income, investments, and net worth.",
+    start_url: "/",
+    scope: "/",
+    display: "standalone",
+    background_color: "#101827",
+    theme_color: "#101827",
+    icons: [
+      {
+        src: "/icon.svg",
+        sizes: "1024x1024",
+        type: "image/svg+xml",
+        purpose: "any",
+      },
+    ],
+  };
+}
