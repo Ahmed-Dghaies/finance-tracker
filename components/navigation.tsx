@@ -10,6 +10,7 @@ import {
   TrendingUp,
   Wallet,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -58,9 +59,14 @@ export function Navigation({ userEmail, onSignOut }: NavigationProps) {
     <nav className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
-            <span className="text-lg font-bold text-primary-foreground">F</span>
-          </div>
+          <Image
+            src="/icon.svg"
+            alt="Finance Tracker"
+            width={36}
+            height={36}
+            className="h-9 w-9 rounded-xl"
+            priority
+          />
           <span className="hidden text-base font-semibold sm:inline-flex">Finance Tracker</span>
         </Link>
 
@@ -123,9 +129,18 @@ export function Navigation({ userEmail, onSignOut }: NavigationProps) {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[82vw] sm:w-88">
-              <SheetHeader className="pb-2 pr-10">
-                <SheetTitle>Finance Tracker</SheetTitle>
-              </SheetHeader>
+                <SheetHeader className="pb-2 pr-10">
+                  <SheetTitle className="flex items-center gap-2">
+                    <Image
+                      src="/icon.svg"
+                      alt="Finance Tracker"
+                      width={28}
+                      height={28}
+                      className="h-7 w-7 rounded-lg"
+                    />
+                    <span>Finance Tracker</span>
+                  </SheetTitle>
+                </SheetHeader>
 
               <div className="space-y-3 px-4">
                 {userEmail && (
